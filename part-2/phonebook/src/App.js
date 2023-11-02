@@ -1,5 +1,5 @@
 
-//  **************   Exercise - 2.6   ************   The Phonebook step 1
+//  **************   Exercise - 2.7   ************   The Phonebook step 2
 
 import { useState } from 'react'
 
@@ -8,13 +8,19 @@ const App = () => {
     { name: 'Arto Hellas' }
   ])
   const [newName, setNewName] = useState('')
+  // const [checkExist, setCheckExist] = useState('')
 
   const addNewName = (event) => {
     event.preventDefault()       // preventing default actions, such as page refresh & re-rendering
     // console.log('hey! i m the event occured ', event.target.value)
     const newPerson = {name: newName}
-    setPersons(persons.concat(newPerson))
+    
+    const doExist = persons.some(person => person.name === newPerson.name)
+    
+    if(doExist) {alert(`${newName} is already added to phonebook`)}
+    else setPersons(persons.concat(newPerson))
     console.log(persons)
+    
     setNewName('')
   }
 
