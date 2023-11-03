@@ -1,27 +1,39 @@
 
-//  **************   Exercise - 2.7   ************   The Phonebook step 2
+//  **************   Exercise - 2.8   ************   The Phonebook step 2
+
 
 import { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas' , number: 0}
   ])
   const [newName, setNewName] = useState('')
-  // const [checkExist, setCheckExist] = useState('')
+  const [newNumber, setNewNumber] = useState('')
 
-  const addNewName = (event) => {
-    event.preventDefault()       // preventing default actions, such as page refresh & re-rendering
-    // console.log('hey! i m the event occured ', event.target.value)
-    const newPerson = {name: newName}
+  const addNewContact = (event) => {
+    event.preventDefault()
+
+    console.log(event)
+    console.log(event.target)
+
+    // creating a new object
+    const newContact = {
+      name: newName,
+      number: newNumber
+    }
     
-    const doExist = persons.some(person => person.name === newPerson.name)
-    
-    if(doExist) {alert(`${newName} is already added to phonebook`)}
-    else setPersons(persons.concat(newPerson))
-    console.log(persons)
-    
-    setNewName('')
+    const doExist = persons.some( person => (person.name===newContact.name)||(person.number===newContact.number))                                                                                                    
+
+    if(doExist) {
+      alert(`${newContact.name} is already added to the Phonebook`)
+    }
+    else {
+      const updatedContactList = persons.concat(newContact)  // using spread operator here
+      setPersons(updatedContactList);
+    }
+      setNewName('')
+      setNewNumber('')
   }
 
   const handleNewName = (event) => {
@@ -29,10 +41,15 @@ const App = () => {
     setNewName(event.target.value)
   }
 
+  const handleNewNumber = (event) => {
+    console.log(event.target.value)
+    setNewNumber(event.target.value)
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addNewName}>
+      <form onSubmit={addNewContact}>
         <div>
           name: <input value={newName}
                        onChange={handleNewName}
@@ -40,14 +57,19 @@ const App = () => {
                 />
         </div>
         <div>
+          number: <input value={newNumber}
+                         onChange={handleNewNumber}
+                         placeholder='type here...'
+                  />
+        </div>
+        <div>
           <button type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map((person) => <div key={person.name}> {person.name} </div>)}
+      {persons.map((person) => <div key={person.name}> {person.name} {person.number} </div>)}
       
       {/* <div>debug: {newName}</div> */}
-      
     </div>
   )
 }
