@@ -1,5 +1,5 @@
 
-//  **************   Exercise - 2.8   ************   The Phonebook step 2
+//  **************   Exercise - 2.8   ************   The Phonebook step 3 
 
 
 import { useState } from 'react'
